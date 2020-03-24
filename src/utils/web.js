@@ -1,22 +1,3 @@
-//v1.0.190425
-
-import _ from 'lodash/core';
-
-export function urlJoin(...parts) {
-    return parts.map(p => _.trim(p, '/')).join('/');
-}
-
-export function normalizePath(p) {
-    return p[0] === '?' ? p : p[0] === '/' ? p : '/' + p;
-}
-export function appPath(p) {
-    return p
-        ? window.__basePath + normalizePath(p)
-        : window.__basePath === ''
-            ? '/'
-            : window.__basePath;
-}
-
 export function buildQuery(data) {
     return Object.keys(data)
         .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
@@ -24,17 +5,33 @@ export function buildQuery(data) {
 }
 
 export function redirect(path) {
-    window.location.replace(appPath(path));
+    window.location.replace(path);
 }
 
-export function goto(path) {
-    window.location.href = appPath(path);
+export function clickLink(path) {
+    window.location.href = path;
+}
+
+export function newTab(path) {
+    let link = document.createElement('a');
+    link.href = path;
+    link.target = "_blank";
+    link.click();
 }
 
 export function url(pathname, query) {
     let loc = window.location;
+    let webPath;
 
-    pathname = _.trimStart(pathname, '/');
-    
-    return loc.protocol + "//" + loc.host + "/" + (pathname || loc.pathname) + (query ? ('?' + buildQuery(query)) : loc.search); 
+    if (pathname) {
+        if (pathname[0] === "/") {
+            webPath = pathname.substr(1);
+        } else {
+            webPath = pathname;
+        } 
+    } else {
+        webPath = loc.pathname[0] === '/' ? loc.pathname.substr(1) : loc.pathname;
+    }
+
+    return loc.protocol + "//" + loc.host + "/" + webPath + (query ? ('?' + buildQuery(query)) : loc.search);
 }
