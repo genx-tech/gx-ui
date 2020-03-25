@@ -16,6 +16,67 @@ export const iconMenuListData = [
     { text: 'Spam', onClick: action('Spam clicked'), icon: <MailIcon /> } 
   ];
 
+export const dataGridData = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park',
+    },
+    {
+      key: '4',
+      name: 'Jim Red',
+      age: 32,
+      address: 'London No. 2 Lake Park',
+    }
+  ];  
+
+export const dataGridColumns = [
+  {
+    title: 'name',
+    dataIndex: 'name',
+    width: '25%',
+    editable: true,
+  },
+  {
+    title: 'age',
+    dataIndex: 'age',
+    width: '15%',
+    editable: true,
+    inputType: 'number',
+    editorStyle: {
+      margin: 0,
+    },
+    editorRules: (record) => [{
+      required: true,
+      message: `Please Input age!`
+    }]
+  },
+  {
+    title: 'address',
+    dataIndex: 'address',
+    width: '40%',
+    editable: true,
+  },
+  {
+    title: 'operation',
+    dataIndex: 'operation',
+    actions: [ { label: 'Edit', type: 'edit' } ]
+  }
+];
+
 export function bodyText() {
     return <div><Typography paragraph>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
